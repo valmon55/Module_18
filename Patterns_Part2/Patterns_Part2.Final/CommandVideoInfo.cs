@@ -24,13 +24,13 @@ namespace Patterns_Part2.Final
             ValueTask<Video> video = new ValueTask<Video>();
             Console.WriteLine("Команда на получении информации о видео");
             video = youtubeClient.Videos.GetAsync(url);
-            Console.Write(
+            var info = 
                 video.Result.Author.Title + Environment.NewLine +   
                 video.Result.Title + Environment.NewLine +
                 video.Result.Description + Environment.NewLine +
                 video.Result.Duration.ToString() + Environment.NewLine
-                );
-            receiver.Operation();
+                ;
+            receiver.Operation("Получено описание видео: \n" + info);
         }
     }
 }

@@ -8,9 +8,9 @@ namespace Patterns_Part2.Final
 {
     public class Receiver
     {
-        public void Operation()
+        public void Operation(string result)
         {
-            Console.WriteLine("Выполняем операцию");
+            Console.WriteLine(result);
         }
     }
 }
