@@ -40,9 +40,9 @@ VideoExists:
             
             var receiver = new Receiver();
             
-            var videoInfo = new CommandVideoInfo(receiver, youtubeClient);
-            sender.SetCommand(videoInfo);
-            sender.Execute(videoId);
+            //var videoInfo = new CommandVideoInfo(receiver, youtubeClient);
+            //sender.SetCommand(videoInfo);
+            //sender.Execute(videoId);
 
             var downloadVideo = new CommandDownloadVideo(receiver, youtubeClient);
             sender.SetCommand(downloadVideo);

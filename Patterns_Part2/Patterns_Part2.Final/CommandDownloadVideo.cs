@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using YoutubeExplode;
 using YoutubeExplode.Converter;
 using YoutubeExplode.Videos;
+using YoutubeExplode.Videos.Streams;
 
 namespace Patterns_Part2.Final
 {
@@ -25,10 +26,14 @@ namespace Patterns_Part2.Final
         }
         public override async void Execute(string url)
         {
-            ValueTask video = new ValueTask();
-
             Console.WriteLine("Команда на скачивание видео");
-            await (video = youtubeClient.Videos.DownloadAsync(url, Path.Combine(path, file), builder => builder.SetPreset(ConversionPreset.UltraFast)) );
+            var streamManifest = await youtubeClient.Videos.Streams.GetManifestAsync("https://www.youtube.com/watch?v=pF48yXghmkk");
+            //var streamVideo = streamManifest.GetMuxedStreams().GetWithHighestVideoQuality();
+            //await youtubeClient.Videos.Streams.DownloadAsync(streamVideo, "video.mp4");
+                
+
+            //await youtubeClient.Videos.DownloadAsync(url, Path.Combine(path, file), builder => builder.SetPreset(ConversionPreset.UltraFast));
+
             receiver.Operation($"Видео {file} скачано в каталог {path}.");
         }
     }
