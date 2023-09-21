@@ -25,10 +25,10 @@ namespace Patterns_Part2.Final
             Console.WriteLine("Команда на получении информации о видео");
             video = youtubeClient.Videos.GetAsync(url);
             Console.Write(
-                video.Result.Author.Title +
-                video.Result.Title +
-                video.Result.Description +
-                video.Result.Duration.ToString()
+                video.Result.Author.Title + Environment.NewLine +   
+                video.Result.Title + Environment.NewLine +
+                video.Result.Description + Environment.NewLine +
+                video.Result.Duration.ToString() + Environment.NewLine
                 );
             receiver.Operation();
         }

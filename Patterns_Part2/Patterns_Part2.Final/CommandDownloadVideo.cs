@@ -21,7 +21,7 @@ namespace Patterns_Part2.Final
         public override async void Execute(string url)
         {
             Console.WriteLine("Команда на скачивание видео");
-            await youtubeClient.Videos.DownloadAsync(url, "path",builder => builder.SetPreset(ConversionPreset.UltraFast));
+            await youtubeClient.Videos.DownloadAsync(url, "D:\\",builder => builder.SetPreset(ConversionPreset.UltraFast));
             receiver.Operation();
         }
     }
