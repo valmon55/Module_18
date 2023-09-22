@@ -16,25 +16,32 @@ namespace Patterns_Part2.Final
         Receiver receiver;
         YoutubeClient youtubeClient;
 
-        static string path = "D:\\Temp\\Module_18";
-        static string file = "TestDownlaod.mpeg";
-        //string s = Path.Combine(path, file);
         public CommandDownloadVideo(Receiver receiver, YoutubeClient youtubeClient)
         {
             this.receiver = receiver;
             this.youtubeClient = youtubeClient;
         }
-        public override async void Execute(string url)
+        public override async void Execute(string VideoId)
         {
-            Console.WriteLine("Команда на скачивание видео");
-            var streamManifest = await youtubeClient.Videos.Streams.GetManifestAsync("https://www.youtube.com/watch?v=pF48yXghmkk");
-            //var streamVideo = streamManifest.GetMuxedStreams().GetWithHighestVideoQuality();
-            //await youtubeClient.Videos.Streams.DownloadAsync(streamVideo, "video.mp4");
-                
+            Console.WriteLine("Cкачивание видео...");
+            try
+            {
+                var streamManifest = await youtubeClient.Videos.Streams.GetManifestAsync(VideoId);
+                var streamVideo = streamManifest.GetMuxedStreams().TryGetWithHighestVideoQuality();
+                if( streamVideo == null) 
+                {
+                    Console.WriteLine("The video has no steams!");
+                }
+                var file = $"{VideoId}.{streamVideo.Container.Name}";
 
-            //await youtubeClient.Videos.DownloadAsync(url, Path.Combine(path, file), builder => builder.SetPreset(ConversionPreset.UltraFast));
+                await youtubeClient.Videos.Streams.DownloadAsync(streamVideo, file);
 
-            receiver.Operation($"Видео {file} скачано в каталог {path}.");
+                receiver.Operation($"Видео {file} скачано.");
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.ToString());    
+            }
         }
     }
 }

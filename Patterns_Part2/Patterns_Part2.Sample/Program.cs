@@ -19,7 +19,7 @@ public static class Program
         var youtube = new YoutubeClient();
 
         // Get the video ID
-        Console.Write("Enter YouTube video ID or URL: ");
+        Console.Write("Enter YouTube video ID or URL: ");   
         var videoId = VideoId.Parse(Console.ReadLine() ?? "");
 
         // Get available streams and choose the best muxed (audio + video) stream
