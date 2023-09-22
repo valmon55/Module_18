@@ -8,11 +8,12 @@ namespace Patterns_Part2.Final
     {
         static void Main(string[] args)
         {
-            //Console.WriteLine("Введите ссылку на Youtube-видео:");
-            string? url = "https://www.youtube.com/watch?v=pF48yXghmkk";
-                          //"https://www.youtube.com/shorts/uGwkUA56qa4"; 
-                //"uGwkUA56qa4";
-                //"https://www.youtube.com/shorts/v5ynfbAYW3w";// Console.ReadLine();
+            Console.WriteLine("Введите ссылку на Youtube-видео:");
+            
+            string url = Console.ReadLine() ?? "";
+                //"https://www.youtube.com/watch?v=pF48yXghmkk";
+                //"https://www.youtube.com/shorts/uGwkUA56qa4"; 
+                //"https://www.youtube.com/shorts/v5ynfbAYW3w";
 
             YoutubeClient youtubeClient = new YoutubeClient();
             VideoId? videoId= new VideoId();
@@ -26,8 +27,6 @@ namespace Patterns_Part2.Final
                 ///т.к. TryParse не находит его
 
                 videoId = Regex.Match(url, "youtube\\..+?\\/shorts\\/(.*?)(?:\\?|&|\\/|$)").Groups[1].Value;
-                //if (url.StartsWith(@"https://www.youtube.com/shorts/"))
-                //    videoId = url.Substring(@"https://www.youtube.com/shorts/".Length);
                 if (!string.IsNullOrWhiteSpace(videoId))
                     goto VideoExists;
 
@@ -39,17 +38,15 @@ VideoExists:
             var sender = new Sender();
             
             var receiver = new Receiver();
-            
-            //var videoInfo = new CommandVideoInfo(receiver, youtubeClient);
-            //sender.SetCommand(videoInfo);
-            //sender.Execute(videoId);
+
+            var videoInfo = new CommandVideoInfo(receiver, youtubeClient);
+            sender.SetCommand(videoInfo);
+            sender.Execute(videoId);
 
             var downloadVideo = new CommandDownloadVideo(receiver, youtubeClient);
             sender.SetCommand(downloadVideo);
             sender.Execute(videoId);  
 
-            //Console.WriteLine("Название видео и описание:");
-            //Console.WriteLine("Скачиваем видео.");
             Console.ReadKey();
         }
     }
